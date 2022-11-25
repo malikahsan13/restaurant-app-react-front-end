@@ -10,12 +10,14 @@ export default function Grid({ data }) {
             <div className="col"><h4>Price</h4></div>
           </div>
         {
-        data.forEach((element) => {
-          <div className="row">
+        data.map((element,key) => {
+          return(
+          <div className="row" key={key}>
             <div className="col">{element.name}</div>
-            <div className="col">element.description</div>
-            <div className="col">element.price</div>
+            <div className="col">{element.description}</div>
+            <div className="col">{element.price}</div>
           </div>
+          )
         })}
       </div>
     </div>

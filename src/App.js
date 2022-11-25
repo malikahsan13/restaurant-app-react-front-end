@@ -15,7 +15,6 @@ function App() {
       setData(result.data);
     })();
   }, []);
-  console.log(data);
   return (
     <div className="container">
       <Heading />
