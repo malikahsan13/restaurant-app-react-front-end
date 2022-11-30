@@ -16,12 +16,12 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: malikahsan13/restaurant-frontend-app:v0.0.1
+        image: malikahsan13/restaurant-app-react-front-end:v0.0.1
         env:
         - name: BACKEND_URL
           value: backend:8000
         ports:
-        - containerPort: 8000
+        - containerPort: 3000
           name: tcp
 
 ---
@@ -36,6 +36,6 @@ spec:
     app: restaurant-frontend
   ports:
   - protocol: TCP
-    port: 8080
-    targetPort: 8080
+    port: 3001
+    targetPort: 3000
     nodePort: 31000
