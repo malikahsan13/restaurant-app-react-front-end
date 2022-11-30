@@ -1,19 +1,25 @@
-FROM node:latest
+FROM node:12-alpine AS build
 
-# set working directory
 WORKDIR /app
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
-
-# install app dependencies
 COPY package.json ./
-COPY package-lock.json ./
-RUN npm install --silent
-RUN npm install react-scripts@5.0.1 -g
 
-# add app
-COPY . ./
+RUN yarn  install
 
-# start app
-CMD ["npm", "start"]
+COPY . /app
+
+RUN yarn build
+
+
+# STAGE 2
+
+FROM node:12-alpine
+
+WORKDIR /app
+
+RUN npm install -g webserver.local
+
+COPY --from=build /app/build ./build
+
+EXPOSE 3000
+CMD webserver.local -d ./build
