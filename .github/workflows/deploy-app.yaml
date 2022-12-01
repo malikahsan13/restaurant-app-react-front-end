@@ -28,9 +28,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build
-        run: npm run 
-        
       - name: Generate Version
         id: generate_version
         uses: anothrNick/github-tag-action@1.52.0
