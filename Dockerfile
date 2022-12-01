@@ -1,17 +1,22 @@
 FROM node:16-alpine AS builder
 
-# Add a work directory
+# set working directory
 WORKDIR /app
-# Cache and Install dependencies
-COPY package.json .
-COPY package-lock.json .
-RUN yarn install
-# Copy app files
-COPY . .
-# Build the app
-RUN yarn build
 
-# Bundle static assets with nginx
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+# install app dependencies
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm install --silent
+RUN npm install react-scripts@5.0.1 -g
+
+# add app
+COPY . ./
+
+RUN npm run build
+
 FROM nginx:1.23.2-alpine 
 
 # Copy built assets from builder
@@ -22,3 +27,7 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
+
+# start app
+#CMD ["npm", "start"]
+
