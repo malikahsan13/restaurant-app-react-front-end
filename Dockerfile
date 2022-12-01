@@ -1,4 +1,4 @@
-FROM node:16-alpine AS builder
+FROM node:16-alpine
 
 # set working directory
 WORKDIR /app
@@ -17,4 +17,3 @@ COPY . ./
 
 # start app
 CMD ["npm", "start"]
-
